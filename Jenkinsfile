@@ -18,8 +18,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build the code using Maven
-                sh 'mvn clean install -DskipTests
-                ls'
+                sh 'mvn clean install -DskipTests'
             }
         }
 
