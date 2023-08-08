@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    triggers {
+        webhook('<your-webhook-secret>', '*/*')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -16,7 +20,6 @@ pipeline {
 
         stage('Archive') {
             steps {
-                // Archive the built artifacts (e.g., JAR, WAR, ZIP files)
                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
             }
         }
