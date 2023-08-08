@@ -1,0 +1,44 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                // Archive the built artifacts (e.g., JAR, WAR, ZIP files)
+                archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh './deploy.sh'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Clean up or perform any cleanup tasks here
+        }
+
+        success {
+            // Notify or perform actions upon successful build and deployment
+        }
+
+        failure {
+            // Notify or perform actions upon build or deployment failure
+        }
+    }
+}
